@@ -1525,7 +1525,7 @@ Identificador completo para usar em `/plugin install` ou em `enabledPlugins`.
 ## Skills vendorizadas
 
 `.claude/skills/caveman/` — só a skill de compressão, copiada do repo upstream
-(MIT). As outras 19 do pack ficaram de fora porque custavam ~1.100 tokens de
-índice por sessão sem entregar nada aqui; o critério está em
-`.claude/skills/CAVEMAN.md`. Independe de plugin: funciona inclusive onde
+(MIT). As outras 19 do pack ficaram de fora porque juntas custavam cerca de 1.100
+tokens de índice por sessão sem uso proporcional; o critério, skill a skill, está
+em `.claude/skills/CAVEMAN.md`. Independe de plugin: funciona inclusive onde
 `/plugin` não existe, como o Claude Code na web.
