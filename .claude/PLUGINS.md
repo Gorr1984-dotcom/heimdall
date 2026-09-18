@@ -3,33 +3,46 @@
 Fonte: [quemsah/awesome-claude-plugins](https://github.com/quemsah/awesome-claude-plugins)
 (Top 100, lista de 13.09.2026) mais [obra/superpowers-marketplace](https://github.com/obra/superpowers-marketplace).
 
-- Marketplaces registrados: **95**
-- Plugins disponíveis: **886**
-- Plugins habilitados: **1** (`caveman@caveman`)
+- Marketplaces catalogados: **95**
+- Plugins catalogados: **886**
+- Marketplaces registrados em `.claude/settings.json`: **5**
+- Plugins habilitados: **0**
 
-Os nomes abaixo saíram do `.claude-plugin/marketplace.json` de cada repositório,
-baixado e validado — não são suposição.
+Os nomes saíram do `.claude-plugin/marketplace.json` de cada repositório, baixado
+e validado — não são suposição.
 
 ## Política adotada
 
-Registrar um marketplace é só descoberta: nada baixa nem executa por isso.
-**Habilitar** um plugin é o que tem custo — hooks (`SessionStart`,
-`UserPromptSubmit`, ...) rodam comandos na sua máquina a cada sessão, e as skills
-do plugin ocupam contexto. Por isso `enabledPlugins` vem praticamente vazio:
-cada plugin é decisão caso a caso.
+Este arquivo é índice, não configuração: ele não entra no contexto de nenhuma
+sessão, então catalogar 886 plugins não custa token nenhum.
 
-Para habilitar um:
+O que custa fica fora dele:
+
+- **Registrar** um marketplace faz o Claude Code clonar aquele repositório para
+  ler o manifesto. Token zero, mas disco e latência de startup — e a lista Top 100
+  é ordenada por estrelas, então inclui monorepos como `next.js`, `storybook`,
+  `diffusers` e `ccxt`, clonados só para extrair um JSON de 2 KB. Por isso
+  `extraKnownMarketplaces` tem apenas 5 entradas:
+  `superpowers-marketplace`, `anthropic-agent-skills`, `claude-code-plugins`,
+  `claude-plugins-official`, `caveman`.
+- **Habilitar** um plugin custa token em toda sessão (nome e descrição de cada
+  skill entram no índice) e pode rodar hooks (`SessionStart`, `UserPromptSubmit`)
+  na máquina. Por isso `enabledPlugins` está vazio.
+
+Para usar algo daqui:
 
 ```bash
-# dentro do Claude Code
+# marketplace ainda não registrado
+/plugin marketplace add <owner>/<repo>
+# habilitar o plugin
 /plugin install <plugin>@<marketplace>
 ```
 
-ou acrescente `"<plugin>@<marketplace>": true` em `enabledPlugins` no
-`.claude/settings.json`. Antes de habilitar, vale olhar o `.claude-plugin/plugin.json`
-do repositório: se tiver bloco `hooks`, algo vai executar na sua máquina.
+Antes de habilitar, olhe o `.claude-plugin/plugin.json` do repositório: se tiver
+bloco `hooks`, algo vai executar na sua máquina a cada sessão.
 
-## Marketplaces
+
+## Marketplaces catalogados
 
 | # | Repositório | Marketplace | Plugins |
 |---|---|---|---|
@@ -132,7 +145,8 @@ do repositório: se tiver bloco `hooks`, algo vai executar na sua máquina.
 ## Não registrados (colisão de nome)
 
 Dois repositórios publicam o mesmo nome de marketplace e o Claude Code aceita só um.
-Mantive o mais bem colocado na lista; para trocar, edite `.claude/settings.json`.
+Ficou catalogado o mais bem colocado na lista; para usar o outro, registre-o com
+outro nome.
 
 | Repositório | Nome em conflito | Mantido |
 |---|---|---|
@@ -1510,6 +1524,8 @@ Identificador completo para usar em `/plugin install` ou em `enabledPlugins`.
 
 ## Skills vendorizadas
 
-`.claude/skills/` traz o pack MIT do caveman, copiado para dentro do repo — veja
-`.claude/skills/CAVEMAN.md`. Independe de plugin: funciona inclusive onde `/plugin`
-não existe, como o Claude Code na web.
+`.claude/skills/caveman/` — só a skill de compressão, copiada do repo upstream
+(MIT). As outras 19 do pack ficaram de fora porque custavam ~1.100 tokens de
+índice por sessão sem entregar nada aqui; o critério está em
+`.claude/skills/CAVEMAN.md`. Independe de plugin: funciona inclusive onde
+`/plugin` não existe, como o Claude Code na web.
