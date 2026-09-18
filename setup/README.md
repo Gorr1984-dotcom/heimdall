@@ -7,17 +7,24 @@ Nada aqui é aplicado automaticamente: são arquivos para copiar para a sua máq
 
 ```bash
 mkdir -p ~/.claude
-cp setup/claude-global/CLAUDE.md ~/.claude/CLAUDE.md
 
-# settings.json: se já existir um, faça merge em vez de sobrescrever
+# guarde o que já existe antes de qualquer cópia
+cp ~/.claude/CLAUDE.md     ~/.claude/CLAUDE.md.bak     2>/dev/null
+cp ~/.claude/settings.json ~/.claude/settings.json.bak 2>/dev/null
+
+cp setup/claude-global/CLAUDE.md ~/.claude/CLAUDE.md
 cp setup/claude-global/settings.json ~/.claude/settings.json
 ```
+
+Se você já tinha um `settings.json`, o comando acima o substitui — abra o `.bak` e
+traga de volta o que era seu (`permissions`, `env`, `hooks`, `model`). O arquivo
+daqui só define `permissions.allow`, `extraKnownMarketplaces` e `enabledPlugins`.
 
 Quer o modo caveman em todo projeto, e não só neste repo:
 
 ```bash
-mkdir -p ~/.claude/skills
-cp -r .claude/skills/caveman ~/.claude/skills/caveman
+mkdir -p ~/.claude/skills/caveman
+cp -r .claude/skills/caveman/. ~/.claude/skills/caveman/
 ```
 
 ## O que cada arquivo faz

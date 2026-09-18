@@ -15,17 +15,21 @@ Claude Code session opened on this repo, including Claude Code on the web, where
 
 The upstream pack ships 20 skills; the other 19 were deliberately left out:
 
-- 9 (`caveman-setup`, `-discover`, `-learn`, `-manage`, `-optimize`,
-  `-evidence-review`, `-stats`, `-compress`, `-commit`) target Caveman Cloud, the
-  author's hosted gateway. Without an account there they are dead text.
+- 7 (`caveman-setup`, `-discover`, `-learn`, `-manage`, `-optimize`,
+  `-evidence-review`, `-stats`) target Caveman Cloud, the author's hosted
+  gateway. Without an account there they are dead text.
 - 6 (`investigate-first`, `lean-build`, `migration`, `safe-refactor`,
   `surgical-patch`, `verify-and-stop`) are generic workflow prose.
-- the rest (`cavecrew`, `caveman-explore`, `caveman-review`, `caveman-help`)
-  duplicate built-in agents and commands.
+- 4 (`cavecrew`, `caveman-explore`, `caveman-review`, `caveman-help`) duplicate
+  built-in agents and commands.
+- 2 (`caveman-commit`, `caveman-compress`) are local utilities — a commit-message
+  writer and a CLAUDE.md compressor. They work without any account; they just are
+  not worth a permanent index entry here. Copy either back if that changes.
 
 Each skill's name and description is injected into every session's index, so the
-full pack cost ~1.100 tokens per session before any work started. Keeping one
-skill cuts that to ~70.
+full pack cost roughly 1.100 tokens per session before any work started, against
+about 70 for the one kept. Both figures are estimates from the frontmatter
+length; `/context` reports the measured number for a live session.
 
 The `caveman@caveman` plugin is **not** enabled in `.claude/settings.json`: it
 would load this same skill a second time and add two hooks that run on every
